@@ -32,7 +32,7 @@ import com.computer.util.PropertyUtils;
  * @author tanqidong
  *
  */
-public class DBTools {
+public class DBTools <T> {
 	
 	private static Log log=Log.getLog(PropertyUtils.class);
  
@@ -64,7 +64,7 @@ public class DBTools {
 	
  
 	
-	private  static  void createTable(Class cls,boolean dropIfexist)
+	private  static  void createTable(Class<?> cls,boolean dropIfexist)
 	{
 		log.i("create table "+cls.getSimpleName());
 		mNutDao.create(cls, dropIfexist);
@@ -74,7 +74,7 @@ public class DBTools {
 	 
 	}
 	
-	public List findAll(Class<?> cls)
+	public List<T> findAll(Class<T> cls)
 	{
 		
 		log.i("find all in table "+cls.getSimpleName());
@@ -83,25 +83,25 @@ public class DBTools {
 		return list;
 	}
 	
-	public Object findById(Class<?> cls,Integer id)
+	public T findById(Class<T> cls,Integer id)
 	{
 		log.i("findById in table "+cls.getSimpleName()+" with id "+id);
 		
-		Object object=mNutDao.fetch(cls, id);
+		T object=mNutDao.fetch(cls, id);
 		
 		return object;
 	}
 	
-	public Object findByName(Class<?> cls,String name)
+	public T findByName(Class<T> cls,String name)
 	{
 		log.i("findById in table "+cls.getSimpleName()+" with name "+name);
 		
-		Object object=mNutDao.fetch(cls, name);
+		T object=mNutDao.fetch(cls, name);
 		
 		return object;
 	}
 	
-	public int update(Object object)
+	public int update(T object)
 	{
 		log.i("updateById in table "+object.getClass().getSimpleName());
 	
@@ -111,7 +111,7 @@ public class DBTools {
 		
 	}
 	
-	public int deleteById(Class<?> cls,Integer id)
+	public int deleteById(Class<T> cls,Integer id)
 	{
 		log.i("deleteById in table "+cls.getSimpleName()+" with id "+id);
 	
@@ -121,7 +121,7 @@ public class DBTools {
 		
 	}
 	
-	public Object insert(Object o)
+	public T insert(T o)
 	{
 		log.i("insert in table "+o.getClass().getSimpleName());
 		o=mNutDao.insert(o);
@@ -137,7 +137,7 @@ public class DBTools {
 		for(int i=0;i<tables.length;i++)
 		{
 			String tableName=tables[i].getSimpleName();
-			if(p.contains(tableName))
+			if(p.containsKey(tableName))
 			{
 				String isTableCreated=p.getProperty(tableName);
 				

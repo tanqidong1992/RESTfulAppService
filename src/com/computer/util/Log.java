@@ -1,6 +1,6 @@
 /**
  * author:tanqidong
- * create Time:2015Äê4ÔÂ27ÈÕ,ÏÂÎç3:55:59
+ * create Time:2015ï¿½ï¿½4ï¿½ï¿½27ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½3:55:59
  * description:
  * fileName:Log.java	
  */
@@ -35,6 +35,13 @@ public class Log {
 	public static Log getLog(Class<?> cls)
 	{
 		return new Log(cls.getSimpleName());
+		
+	}
+
+	public void error(String string) {
+		// TODO Auto-generated method stub
+		
+		i(string);
 		
 	}
 }

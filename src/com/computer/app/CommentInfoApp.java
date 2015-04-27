@@ -13,17 +13,13 @@ import com.computer.entity.CommentInfo;
  * @author tanqidong
  *
  */
-public class CommentInfoApp {
+public class CommentInfoApp extends BaseApp{
 	
-	private DBTools db;
+
 	/**
 	 * 
 	 */
-	public CommentInfoApp() {
-		// TODO Auto-generated constructor stub
-		
-	 db=	new DBTools();
-	}
+	
 	public CommentInfo addComment(CommentInfo ci)
 	{
 		return	  (CommentInfo) db.insert(ci);
