@@ -2,7 +2,7 @@ package com.computer.service;
 
 import org.springframework.stereotype.Service;
 
-import com.computer.app.UserApp;
+ 
 import com.computer.entity.Response;
 import com.computer.entity.User;
 import com.computer.util.Log;
@@ -10,7 +10,7 @@ import com.computer.util.Log;
 @Service
 public class UserServiceImpl extends BaseService implements UserService {
 	private static final Class<?> userClass=User.class;
-	protected Log log=Log.getLog(UserApp.class);
+	protected Log log=Log.getLog(userClass);
 	
 	@Override
 	public Response<Integer> updatePassword(Integer id, String password,
