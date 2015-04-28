@@ -6,6 +6,7 @@
  */
 package com.computer.util;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,6 +22,27 @@ public class PropertyUtils {
 
 	private static Log log=Log.getLog(PropertyUtils.class);
 	private static final String defaultPath="db.properties";
+	
+	static
+	{
+		
+		File file=new File(defaultPath);
+		
+		try {
+			if(file.exists() || file.createNewFile())
+			{
+				log.i("初始化配置文件");
+			}
+			else
+				log.i("配置文件初始化失败");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.i("配置文件初始化失败，出现异常");
+			log.i(e.getMessage());
+		}
+		
+	}
 	public static void main(String[] args) throws IOException {
 		
 		putProperties("test2", "gg");

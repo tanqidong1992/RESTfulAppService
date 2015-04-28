@@ -56,10 +56,10 @@ public class Client {
 		        new UsernamePasswordCredentials("username", "password"));
 		    // ���ʵ�Ŀ��վ�㣬�˿ں�Э��
 		    HttpHost targetHost = new HttpHost("www.google.com", 443, "https");
-		    // ���������?
+		    // ���������?
 		    HttpHost proxy = new HttpHost("10.60.8.20", 8080);
 		    httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-		    // Ŀ����?
+		    // Ŀ����?
 		    HttpGet httpget = new HttpGet("/adsense/login/zh_CN/?");
 		    System.out.println("Ŀ��: " + targetHost);
 		    System.out.println("����: " + httpget.getRequestLine());
@@ -364,14 +364,14 @@ public static String sendPost(String url, Map<String, String> params,String char
 	
 	
 	
-	public   String sendGet(String url, Map<String, String> params) throws ClientProtocolException, IOException {
+	public static   String sendGet(String url, Map<String, String> params) throws ClientProtocolException, IOException {
 		Set<String> keys = params.keySet();
 		StringBuilder urlBuilder = new StringBuilder(url + "?");
 		for (String key : keys) {
 			urlBuilder.append(key).append("=").append(params.get(key)).append("&");
 		}
 		urlBuilder.delete(urlBuilder.length() - 1, urlBuilder.length());
-		return this.sendGet(urlBuilder.toString());
+		return  sendGet(urlBuilder.toString());
 	}
 	
 	/*
