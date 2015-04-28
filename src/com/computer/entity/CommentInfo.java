@@ -14,8 +14,9 @@ import org.nutz.mvc.annotation.Attr;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.sun.xml.internal.txw2.annotation.XmlElement;
  
- 
+@XmlElement
 public class CommentInfo {
 	/**
 	 * id

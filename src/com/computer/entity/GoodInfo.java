@@ -10,10 +10,13 @@ import java.util.Date;
 
 import org.nutz.dao.entity.annotation.Id;
 
+import com.sun.xml.internal.txw2.annotation.XmlElement;
+
 /**
  * @author tanqidong
  *
  */
+@XmlElement
 public class GoodInfo {
 
 	@Id(auto=true)

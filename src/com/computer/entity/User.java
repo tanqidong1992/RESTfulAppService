@@ -9,10 +9,13 @@ package com.computer.entity;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Name;
 
+import com.sun.xml.internal.txw2.annotation.XmlElement;
+
 /**
  * @author tanqidong
  *
  */
+@XmlElement
 public class User {
 	
 	@Id(auto=true)
