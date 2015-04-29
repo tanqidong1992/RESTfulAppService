@@ -290,8 +290,8 @@ public static String sendPost(String url, Map<String, String> params,String char
 			}
 		}
 		// ����  
-		get.setEntity(new UrlEncodedFormEntity(qparams,"GBK"));
-		
+		get.setEntity(new UrlEncodedFormEntity(qparams,charset));
+		//get.addHeader("Content-Type", "application/json; charset=UTF-8");
 		HttpContext httpContext=new BasicHttpContext();
 		if(mCookieStore==null)
 	     mCookieStore = new BasicCookieStore();

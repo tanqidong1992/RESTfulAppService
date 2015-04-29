@@ -10,7 +10,7 @@ import javax.ws.rs.QueryParam;
 import com.computer.entity.Response;
 import com.computer.entity.User;
 
-@Produces("application/xml")
+@Produces("application/json;charset=UTF-8")
 public interface UserService {
 
 	@POST

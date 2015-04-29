@@ -10,13 +10,14 @@ import java.util.Date;
 
 import org.nutz.dao.entity.annotation.Id;
 
+import com.colobu.fastjson.FastJsonType;
 import com.sun.xml.internal.txw2.annotation.XmlElement;
 
 /**
  * @author tanqidong
  *
  */
-@XmlElement
+@FastJsonType
 public class GoodInfo {
 
 	@Id(auto=true)

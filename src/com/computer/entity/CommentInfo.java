@@ -13,11 +13,11 @@ import org.nutz.dao.entity.annotation.Id;
 import org.nutz.mvc.annotation.Attr;
 
 import com.alibaba.fastjson.annotation.JSONType;
+import com.colobu.fastjson.FastJsonType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.xml.internal.txw2.annotation.XmlElement;
-@JSONType
-@XmlElement
+@FastJsonType
 public class CommentInfo {
 	/**
 	 * id

@@ -3,8 +3,12 @@ package com.computer.entity;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-@XmlRootElement(name="responsde")
-@XmlSeeAlso({User.class,GoodInfo.class,CommentInfo.class})
+import com.alibaba.fastjson.annotation.JSONType;
+import com.colobu.fastjson.FastJsonType;
+
+@FastJsonType
+//@XmlRootElement(name="responsde")
+//@XmlSeeAlso({User.class,GoodInfo.class,CommentInfo.class})
 public class Response <T>{
 	
 	private Boolean operateResult=true;
