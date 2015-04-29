@@ -8,6 +8,8 @@ package com.computer.entity;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.nutz.dao.entity.annotation.Id;
 
 import com.colobu.fastjson.FastJsonType;
@@ -18,6 +20,7 @@ import com.sun.xml.internal.txw2.annotation.XmlElement;
  *
  */
 @FastJsonType
+@XmlRootElement
 public class GoodInfo {
 
 	@Id(auto=true)

@@ -6,6 +6,8 @@
  */
 package com.computer.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.nutz.dao.entity.annotation.ColDefine;
 import org.nutz.dao.entity.annotation.ColType;
 import org.nutz.dao.entity.annotation.Column;
@@ -18,6 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.xml.internal.txw2.annotation.XmlElement;
 @FastJsonType
+@XmlRootElement
 public class CommentInfo {
 	/**
 	 * id
