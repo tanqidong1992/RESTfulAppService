@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -21,11 +22,12 @@ import java.util.Properties;
 public class PropertyUtils {
 
 	private static Log log=Log.getLog(PropertyUtils.class);
-	private static final String defaultPath="db.properties";
+	private static final String defaultPath= PropertyUtils.class.getResource("/").getPath().substring(1)+"db.properties";
 	
 	static
 	{
-		
+		 
+		log.i(defaultPath);
 		File file=new File(defaultPath);
 		
 		try {
@@ -103,6 +105,8 @@ public class PropertyUtils {
 		}
 		try {
 			p.load(inStream);
+			//文件前面没有关闭
+			inStream.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,6 +145,9 @@ public class PropertyUtils {
 			log.i(e.getMessage());
 			e.printStackTrace();
 		}
+		
+		
+		
 	}
 	
 	

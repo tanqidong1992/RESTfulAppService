@@ -12,10 +12,11 @@ import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.mvc.annotation.Attr;
 
+import com.alibaba.fastjson.annotation.JSONType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.xml.internal.txw2.annotation.XmlElement;
- 
+@JSONType
 @XmlElement
 public class CommentInfo {
 	/**
