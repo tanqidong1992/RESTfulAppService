@@ -21,7 +21,12 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
 	 	<jaxrs:serviceBeans>
 	 	<ref bean="user"></ref>
 	 	</jaxrs:serviceBeans>
- 	
+	 	
+ 	<jaxrs:providers >
+ 	 <bean class="com.colobu.fastjson.FastJsonProvider">
+ 	 </bean>
+ 	 
+ 	</jaxrs:providers>
  	</jaxrs:server>
 
 </beans>
