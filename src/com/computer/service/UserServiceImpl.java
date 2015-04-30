@@ -1,9 +1,11 @@
 package com.computer.service;
 
 import org.springframework.stereotype.Service;
+
 import com.computer.entity.Response;
 import com.computer.entity.User;
 import com.computer.util.Log;
+import com.computer.util.StrUtil;
 
 @Service
 public class UserServiceImpl extends BaseService implements UserService {
@@ -23,7 +25,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 			 resp.setOperateResult(false);
 			 resp.setObject(-1);
 			 resp.setDescription("此用户用户不存在");
-			 
+			 log.i(StrUtil.detectStringCharSet(resp.getDescription()));
 			 return resp;
 		 }
 		
@@ -72,7 +74,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		{
 			resp.setDescription("不存在此用户");
 			resp.setObject(false);
-			 
+			 log.i(StrUtil.detectStringCharSet(resp.getDescription()));
 		}
 		else
 		{

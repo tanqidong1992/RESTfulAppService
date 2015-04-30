@@ -14,6 +14,8 @@ import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
+import org.mozilla.intl.chardet.nsDetector;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.DefaultJSONParser.ResolveTask;
@@ -43,6 +45,7 @@ import com.alibaba.fastjson.serializer.ValueFilter;
  */
 @Provider
 public class FastJsonProvider implements MessageBodyReader<Object>, MessageBodyWriter<Object> {
+	private static final String defaultCharSet = "UTF-8";
 	private boolean annotated = false;
 	private String[] scanpackages = null;
 	private Class<?>[] clazzes = null;
@@ -196,10 +199,11 @@ public class FastJsonProvider implements MessageBodyReader<Object>, MessageBodyW
                     serializer.getAfterFilters().add((AfterFilter) filter);
                 }
             }
-
+          
             serializer.write(object);
-
-            return out.toString();
+            String ss=out.toString();
+            return ss;
+            
         } finally {
             out.close();
         }
@@ -309,7 +313,7 @@ public class FastJsonProvider implements MessageBodyReader<Object>, MessageBodyW
 			filter = fastJsonConfig.serializeFilters.get(type);
 		String jsonStr = toJSONString(t, filter, fastJsonConfig.serializerFeatures);
 		if (jsonStr != null)
-			entityStream.write(jsonStr.getBytes());
+			entityStream.write(jsonStr.getBytes(defaultCharSet));
 	}
 
 	/*

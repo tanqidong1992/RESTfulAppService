@@ -20,7 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.xml.internal.txw2.annotation.XmlElement;
 @FastJsonType
-@XmlRootElement
+@XmlElement
 public class CommentInfo {
 	/**
 	 * id

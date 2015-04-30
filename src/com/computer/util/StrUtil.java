@@ -4,6 +4,8 @@ package com.computer.util;
 
 import java.util.regex.Pattern;
 
+import org.mozilla.intl.chardet.nsDetector;
+
 
  
 
@@ -33,5 +35,14 @@ public class StrUtil {
 	     return pattern.matcher(str).matches();  
 	   }
 
-	
+	public static String detectStringCharSet(String ss)
+	{
+		nsDetector d=new nsDetector();
+		d.HandleData(ss.getBytes(), 0);
+		
+		String data[]=d.getProbableCharsets();
+ 	
+		System.out.println(data);
+		return data[0];
+	}
 }

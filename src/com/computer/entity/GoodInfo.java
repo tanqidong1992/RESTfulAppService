@@ -20,7 +20,7 @@ import com.sun.xml.internal.txw2.annotation.XmlElement;
  *
  */
 @FastJsonType
-@XmlRootElement
+@XmlElement
 public class GoodInfo {
 
 	@Id(auto=true)

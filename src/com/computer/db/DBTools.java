@@ -39,25 +39,32 @@ public class DBTools <T> {
  
 	private static final String tag ="MyDataSource";
 	private static final String MYSQL_DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
-	private static final String mysqlUrl = "jdbc:mysql://localhost:3306/commentdb?useUnicode=true&characterEncoding=UTF-8";
+	private static String url = "jdbc:mysql://localhost:3306/commentdb?useUnicode=true&characterEncoding=UTF-8";
+	private static String user="root";
+	private static String password="123456Aa";
+	private static String driverClassName="com.mysql.jdbc.Driver";
+	private static final String urlKey="db.url";
+	private static final String userKey="db.user";
+	private static final String passwordKey="db.password";
+	private static final String driverClassNameKey="db.driverClassName";
 	
- 
+	
 	private static NutDao mNutDao;
 	private static  DataSource getSimpleDataSource()
 	{
 		SimpleDataSource sds=new SimpleDataSource();
 		
 		try {
-			sds.setDriverClassName("com.mysql.jdbc.Driver");
+			sds.setDriverClassName(driverClassName);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			log.i(e.getMessage());
 			e.printStackTrace();
 		}
 		
-		sds.setJdbcUrl(mysqlUrl);
-		sds.setPassword("123456Aa");
-		sds.setUsername("root");
+		sds.setJdbcUrl(url);
+		sds.setPassword(password);
+		sds.setUsername(user);
 		
 		return sds;
 	}
@@ -130,9 +137,56 @@ public class DBTools <T> {
 	
 	static Class<?>[] tables=new Class<?>[]{CommentInfo.class,User.class,GoodInfo.class};
 	static{
+		Properties p=PropertyUtils.loadProperties();
+		
+//		初始化数据库连接
+		
+		if(p.containsKey(urlKey))
+		{
+			
+			url=(String) p.getProperty(urlKey);
+			
+		}else
+		{
+			p.put(urlKey, url);
+		}
+		
+		if(p.containsKey(driverClassNameKey))
+		{
+			driverClassName=p.getProperty(driverClassNameKey);
+		}
+		else
+		{
+			p.put(driverClassNameKey, driverClassName);
+		}
+		
+		
+		if(p.containsKey(userKey))
+		{
+			user=p.getProperty(userKey);
+		}
+		else
+		{
+			p.put(userKey, user);
+		}
+		
+		if(p.containsKey(passwordKey))
+		{
+			password=p.getProperty(passwordKey);
+		}
+		else
+		{
+			p.put(passwordKey, password);
+		}
+		
+		
+		
+		
+		
+//		初始化表
 		
 		mNutDao=new NutDao(getSimpleDataSource());
-		Properties p=PropertyUtils.loadProperties();
+		
 		
 		for(int i=0;i<tables.length;i++)
 		{
