@@ -3,9 +3,9 @@ This program based on RESTful Architecture ,It can provides data services to the
 
 #How to use
  You can use it  via HTTP requests. We can get Response by request the url.
-###在浏览器中输入下面的url:(only test get request by this way)
+*在浏览器中输入下面的url:(only test get request by this way)
 eg:``http://localhost:8088/AskLeaveServer/user/isExistUserName?name=sunquan``
-###服务器返回json 格式的数据.
+*服务器返回json 格式的数据.
 ``{"description":"存在此用户","errorCode":0,"object":true,"operateResult":true}``
 
 #Sample 
