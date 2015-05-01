@@ -9,16 +9,24 @@
  */
 package com.computer.db;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
+ 
+
+
+
 import org.nutz.dao.Cnd;
+import org.nutz.dao.Condition;
 import org.nutz.dao.FieldFilter;
 import org.nutz.dao.entity.Entity;
 import org.nutz.dao.impl.NutDao;
 import org.nutz.dao.impl.SimpleDataSource;
+import org.nutz.dao.util.cri.SqlExpression;
 
 import com.computer.entity.CommentInfo;
 import com.computer.entity.GoodInfo;
@@ -232,6 +240,103 @@ public class DBTools <T> {
 		
 		PropertyUtils.save(p);
 	}
+	
+	/**
+	 * 多条件查询，
+	 * 传入的对象不为NULL的字段都是查询条件 ，为NULL的字段就会忽略
+	 * @param o
+	 * @return
+	 */
+	public List  findObject(T o)
+	{
+		Field[] fields=o.getClass().getDeclaredFields();
+		Cnd con=null;
+		 
+		
+		for(int i=0;i<fields.length;i++)
+		{
+			fields[i].setAccessible(true);
+			
+			Object fieldValue=null;
+			try {
+				fieldValue = fields[i].get(o);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(fieldValue!=null)
+			{
+				if(con==null)
+				
+					con=Cnd.where(fields[i].getName(), "=", fieldValue);
+				else
+					con.and(fields[i].getName(), "=", fieldValue);
+				
+			}
+		}
+		log.i(con.toString());
+	return	  mNutDao.query(o.getClass(), con);
+		
+	 
+		
+	}
+	
+	
+	/**
+	 * 多条件查询，
+	 * 
+	 * @param o 传入的对象不为NULL的字段都是查询条件 ，为NULL的字段就会忽略,
+	 * @param operations  查询条件的比较形式 主要有 =, <, <,LIKE等，
+	 * LIKE模糊查询的话，自己在字段的值赋值时注意哦，不给条件，默认为=
+	 * Map<String,String>  key 为字段
+	 * @return
+	 */
+	public List  findObject(T o,Map<String,String> operations)
+	{
+		Field[] fields=o.getClass().getDeclaredFields();
+		Cnd con=null;
+		 
+		
+		for(int i=0;i<fields.length;i++)
+		{
+			fields[i].setAccessible(true);
+			String fieldName=fields[i].getName();
+			Object fieldValue=null;
+			try {
+				fieldValue = fields[i].get(o);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(fieldValue!=null)
+			{
+				if(con==null)
+				
+					con=Cnd.where(fieldName,
+							operations.get(fieldName)==null?"=":operations.get(fieldName),
+							fieldValue);
+				else
+					con.and(fieldName,
+							operations.get(fieldName)==null?"=":operations.get(fieldName),
+							fieldValue);
+				
+			}
+		}
+		log.i(con.toString());
+	return	  mNutDao.query(o.getClass(), con);
+		
+	 
+		
+	}
+	
 	
 	private static final String isTableCreated="true";
 	
