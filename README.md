@@ -10,7 +10,7 @@ eg:``http://localhost:8088/AskLeaveServer/user/isExistUserName?name=sunquan``
 
 #Sample 
 ```Java
- static String url="http://localhost:8080/AskLeaveServer/user/";
+ static String url="http://localhost:8088/AskLeaveServer/user/";
  public static void testlogin() 
 	{
 		Map<String, String> params=new HashMap<String, String>();
@@ -26,7 +26,7 @@ eg:``http://localhost:8088/AskLeaveServer/user/isExistUserName?name=sunquan``
 		params.put("name", "sunquan");
 	 	params.put("password", "123456");
 	 	params.put("userType", "0");
-	 	params.put("stunumber", "201141842121");
+	 	params.put("stunumber", "2011418421");
 	 	params.put("tel", "18207302292");
 	 	params.put("sex", "男");
 	 	params.put("reserve", "");
