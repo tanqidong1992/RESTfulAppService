@@ -40,6 +40,6 @@ eg:``http://localhost:8088/AskLeaveServer/user/isExistUserName?name=sunquan``
 #Author 
  Quan Sun,Qidong Tan
 
-#reference
+#Reference
 理解RESTful架构-阮一峰
 http://www.ruanyifeng.com/blog/2011/09/restful.html
