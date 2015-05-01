@@ -247,7 +247,7 @@ public class DBTools <T> {
 	 * @param o
 	 * @return
 	 */
-	public List  findObject(T o)
+	public List  findObjects(T o)
 	{
 		Field[] fields=o.getClass().getDeclaredFields();
 		Cnd con=null;
@@ -295,7 +295,7 @@ public class DBTools <T> {
 	 * Map<String,String>  key 为字段
 	 * @return
 	 */
-	public List  findObject(T o,Map<String,String> operations)
+	public List  findObjects(T o,Map<String,String> operations)
 	{
 		Field[] fields=o.getClass().getDeclaredFields();
 		Cnd con=null;

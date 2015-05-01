@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.computer.entity.*;
+
 import org.apache.cxf.transport.jms.util.TestReceiver;
 import org.apache.http.client.ClientProtocolException;
  
@@ -11,6 +13,8 @@ import org.apache.http.client.ClientProtocolException;
 
 import org.mozilla.intl.chardet.nsDetector;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.computer.net.Client;
 
 public class WebServiceTest {
@@ -29,7 +33,8 @@ public class WebServiceTest {
 		System.out.println("-->"+new String(ss1.getBytes("UTF-16"),"GBK"));
 		String ss2=new String(ss1.getBytes("GBK"),"GBK");
 		System.out.println(ss2);
-		
+		testRegister();
+		testlogin();
 		//testUserExist();
 //	
 		
@@ -37,7 +42,7 @@ public class WebServiceTest {
 	public static void testRegister() throws ClientProtocolException, IOException
 	{
 		Map<String, String> params=new HashMap<String, String>();
- 		params.put("name", "谭奇栋");
+ 		params.put("name", "tqd");
  	 	params.put("password", "123456");
  	 	params.put("userType", "1");
  		String ss=Client.sendPost(url+"register", params);
@@ -52,16 +57,27 @@ public class WebServiceTest {
 	 	params.put("password", "123456");
 	 	params.put("userType", "1");
 		String ss=Client.sendPost(url+"login", params);
+		
+		
+		
 		System.out.println(ss);
+		 
+		Response res=JSONObject.parseObject(ss, Response.class);
+		 
+	 
+		//JSONObject.getObject(ss, Response<User>.class);
 	}
 	
-	
+
 	public static void testUserExist() throws ClientProtocolException, IOException
 	{
 		Map<String, String> params=new HashMap<String, String>();
 		params.put("name", "tqd");
 	//	params.put("password", "123456");
 		String ss=Client.sendGet(url+"isExistUserName", params);
+		
+		
+		
 		System.out.println(ss);
 	}
 

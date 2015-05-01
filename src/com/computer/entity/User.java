@@ -6,6 +6,7 @@
  */
 package com.computer.entity;
 
+import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Name;
 
@@ -22,8 +23,11 @@ public class User {
 	
 	@Id(auto=true)
 	private Integer id;
+	
+ 
 	@Name
 	private String userName;
+	
 	private String password;
 	
 	/**

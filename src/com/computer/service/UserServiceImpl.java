@@ -101,7 +101,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 			return resp;
 		}
 		
-		if(user.getPassword().equals(password))
+		if(password !=null && password.equals(user.getPassword()))
 		{
 			resp.setDescription("登录成功");
 			resp.setObject(user);

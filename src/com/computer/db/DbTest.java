@@ -16,13 +16,15 @@ public class DbTest {
 		User user=new User();
 		user.setUserName("谭奇栋%");
 		user.setId(2);
+		user.setPassword("123456");
 		Map<String,String> map=new HashMap<String,String>();
 		
 		map.put("userName", "like");
 		map.put("id", "=");
 		
-		List list=db.findObject(user,map);
+		List list=db.findObjects(user,map);
 		
+		list=db.findObjects(user);
 	}
 
 }
