@@ -11,20 +11,25 @@ public class DbTest {
 	public static void main(String[] args) {
 		
 		
-		DBTools db=new DBTools<User>();
+		DBTools<User> db=new DBTools<User>();
 		
 		User user=new User();
-		user.setUserName("谭奇栋%");
-		user.setId(2);
-		user.setPassword("123456");
+		//user.setUserName("谭奇栋%");
+		//user.setId(3);
+		//user.setPassword("123456qwe");
 		Map<String,String> map=new HashMap<String,String>();
 		
 		map.put("userName", "like");
 		map.put("id", "=");
 		
-		List list=db.findObjects(user,map);
+		List<User> list=db.findObjects(user,map,"id",false);
+	//	int result=db.update(user);
+	//	list=db.findObjects(user);
 		
-		list=db.findObjects(user);
+		for(User u:list)
+		{
+			System.out.println(u.getId());
+		}
 	}
 
 }

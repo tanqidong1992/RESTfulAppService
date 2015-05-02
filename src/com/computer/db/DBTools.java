@@ -21,13 +21,11 @@ import javax.sql.DataSource;
 
 
 import org.nutz.dao.Cnd;
-import org.nutz.dao.Condition;
-import org.nutz.dao.FieldFilter;
+ 
 import org.nutz.dao.entity.Entity;
 import org.nutz.dao.impl.NutDao;
 import org.nutz.dao.impl.SimpleDataSource;
-import org.nutz.dao.util.cri.SqlExpression;
-
+ 
 import com.computer.entity.CommentInfo;
 import com.computer.entity.GoodInfo;
 import com.computer.entity.User;
@@ -46,7 +44,7 @@ public class DBTools <T> {
  
  
 	private static final String tag ="MyDataSource";
-	private static final String MYSQL_DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
+	//private static final String MYSQL_DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 	private static String url = "jdbc:mysql://localhost:3306/commentdb?useUnicode=true&characterEncoding=UTF-8";
 	private static String user="root";
 	private static String password="123456Aa";
@@ -247,10 +245,10 @@ public class DBTools <T> {
 	 * @param o
 	 * @return
 	 */
-	public List  findObjects(T o)
+	public List<T>  findObjects(T o)
 	{
 		Field[] fields=o.getClass().getDeclaredFields();
-		Cnd con=null;
+		Cnd con=Cnd.where("1", "=", 1);
 		 
 		
 		for(int i=0;i<fields.length;i++)
@@ -270,16 +268,13 @@ public class DBTools <T> {
 			
 			if(fieldValue!=null)
 			{
-				if(con==null)
-				
-					con=Cnd.where(fields[i].getName(), "=", fieldValue);
-				else
+			 
 					con.and(fields[i].getName(), "=", fieldValue);
 				
 			}
 		}
 		log.i(con.toString());
-	return	  mNutDao.query(o.getClass(), con);
+	return	  (List<T>) mNutDao.query(o.getClass(), con);
 		
 	 
 		
@@ -293,12 +288,14 @@ public class DBTools <T> {
 	 * @param operations  查询条件的比较形式 主要有 =, <, <,LIKE等，
 	 * LIKE模糊查询的话，自己在字段的值赋值时注意哦，不给条件，默认为=
 	 * Map<String,String>  key 为字段
-	 * @return
+	 * @param orderByClolumnName 排序字段 ,为NULL则不排序
+	 * @param desc true 表示desc,false 表示asc
+	 * @return 
 	 */
-	public List  findObjects(T o,Map<String,String> operations)
+	public List<T>  findObjects(T o,Map<String,String> operations,String orderByClolumnName,boolean desc)
 	{
 		Field[] fields=o.getClass().getDeclaredFields();
-		Cnd con=null;
+		Cnd con=Cnd.where("1", "=", "1");
 		 
 		
 		for(int i=0;i<fields.length;i++)
@@ -318,26 +315,35 @@ public class DBTools <T> {
 			
 			if(fieldValue!=null)
 			{
-				if(con==null)
-				
-					con=Cnd.where(fieldName,
-							operations.get(fieldName)==null?"=":operations.get(fieldName),
-							fieldValue);
-				else
+//				if(con==null)
+//				
+//					con=Cnd.where(fieldName,
+//							operations.get(fieldName)==null?"=":operations.get(fieldName),
+//							fieldValue);
+//				else
 					con.and(fieldName,
 							operations.get(fieldName)==null?"=":operations.get(fieldName),
 							fieldValue);
 				
 			}
 		}
-		log.i(con.toString());
-	return	  mNutDao.query(o.getClass(), con);
+		//log.i(con.toString());
+	
+		if(orderByClolumnName!=null)
+		{
+			if(desc)
+				con.desc(orderByClolumnName);
+				else
+					con.asc(orderByClolumnName);
+		}
+		
+	return	   (List<T>) mNutDao.query(o.getClass(), con);
 		
 	 
 		
 	}
 	
 	
-	private static final String isTableCreated="true";
+	 
 	
 }
