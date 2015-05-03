@@ -315,14 +315,11 @@ public class DBTools <T> {
 			
 			if(fieldValue!=null)
 			{
-//				if(con==null)
-//				
-//					con=Cnd.where(fieldName,
-//							operations.get(fieldName)==null?"=":operations.get(fieldName),
-//							fieldValue);
-//				else
+				 
 					con.and(fieldName,
-							operations.get(fieldName)==null?"=":operations.get(fieldName),
+							(null==operations||operations.get(fieldName)==null)?
+							"=":
+							operations.get(fieldName),
 							fieldValue);
 				
 			}
@@ -344,6 +341,26 @@ public class DBTools <T> {
 	}
 	
 	
-	 
+	/**
+	 * 多条件查询，
+	 * 
+	 * @param o 传入的对象不为NULL的字段都是查询条件 ，为NULL的字段就会忽略,
+	 * @param operations  查询条件的比较形式 主要有 =, <, <,LIKE等，
+	 * LIKE模糊查询的话，自己在字段的值赋值时注意哦，不给条件，默认为=
+	 * Map<String,String>  key 为字段
+	 * @param orderByClolumnName 排序字段 ,为NULL则不排序
+	 * @param desc true 表示desc,false 表示asc
+	 * @return 
+	 */
+	public T  findObject(T o,Map<String,String> operations)
+	{
+		List list=findObjects(o, operations, null, false);
+		
+		if(list!=null && list.size()>0)
+			return (T) list.get(0);
+		
+		return null;
+		
+	}
 	
 }

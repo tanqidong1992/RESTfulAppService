@@ -19,6 +19,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		Response<Integer> resp=new Response<Integer>();
 		User user=(User) db.findById(userClass, id);
 		
+		
 		 if(user==null)
 		 {
 			 log.i("用户不存在");

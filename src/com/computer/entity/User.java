@@ -36,6 +36,19 @@ public class User {
 	private Integer userType;
 	
 	
+	private Integer valid;
+	
+	
+	
+	public Integer getValid() {
+		return valid;
+	}
+	public void setValid(Integer valid) {
+		this.valid = valid;
+	}
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
 	public Integer getId() {
 		return id;
 	}
