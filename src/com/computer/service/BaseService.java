@@ -10,6 +10,18 @@ public class BaseService {
 	
 	public BaseService() {
 		// TODO Auto-generated constructor stub
-	 db=	new DBTools();
+	 
 	}
+	
+
+	public DBTools getDb() {
+		return db;
+	}
+
+
+	public void setDb(DBTools db) {
+		this.db = db;
+	}
+	
+	
 }

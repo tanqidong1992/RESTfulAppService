@@ -38,7 +38,7 @@ public class DataObtainer {
 	/**
 	 * 查询评论附带的参数
 	 */
-	private static final String urlCondition="&callback=jsonp_reviews_list&userNumId=1753146414&auctionNumId=39232136537&siteID=1&rateType=&orderType=sort_weight&showContent=1&attribute=&ua=&currentPageNum=";
+	private static final String urlCondition="&callback=jsonp_reviews_list&rateType=&orderType=sort_weight&showContent=1&attribute=&ua=&currentPageNum=";
 
 	/**
 	 * 输出日志标签
@@ -58,7 +58,7 @@ public class DataObtainer {
 		// TODO Auto-generated method stub
 		
 //		这里修改商品id，做测试
-		String id="43684945921";
+		String id="44413860299";
 //		抓取商品评论数据
 		List<CommentInfo>  list=grabData(id);
 		if(list==null)
@@ -94,7 +94,7 @@ public class DataObtainer {
 	private static List<CommentInfo>   grabData(String id) {
 		// TODO Auto-generated method stub
 		String goodUrl=baseUrl+id;
-		log("开始分析商品 "+id+"网页数据");
+		log("开始分析商品 "+id+"网页数据:"+goodUrl);
 		String html = null;
 //		打开商品所在的html页面
 		try {
@@ -146,6 +146,7 @@ public class DataObtainer {
 			log("开始分析商品评论数据页面:"+page);
 //			根据页号，获得商品评论数据
 			html=getComments(url,page);
+			log(html);
 	//		如果商品评论页面打开失败则返回
 			if(html==null)
 			{
@@ -154,13 +155,18 @@ public class DataObtainer {
 				
 			}
 	//		对商品评论数据的分析，预处理获得标准的json格式
-		String []term=html.split("\\(");//根据(分割字符串
- 
-			if(term.length>=2 && term[1].length()>0)
+	//	String []term=html.split("\\(");//根据(分割字符串
+			html.replace("jsonp_reviews_list(", "");
+			
+			//if(term.length>=2 && term[1].length()>0)
+			if(html.contains("jsonp_reviews_list("))
 			{
-				term[1]=term[1].trim();//去掉字符串 前后的空格
-				String jsonData=term[1].substring(0, term[1].length()-1); //去掉字符串后面的)符号
- 
+				
+				//term[1]=term[1].trim();//去掉字符串 前后的空格
+				//String jsonData=term[1].substring(0, term[1].length()-1); //去掉字符串后面的)符号
+				String jsonData=html.replace("jsonp_reviews_list(", "");
+				jsonData=jsonData.trim();
+				jsonData=jsonData.substring(0, jsonData.length()-1); //去掉字符串后面的)符号
 	//			解析json 字符串，获得评论数据对象列表
 				List<CommentInfo> list=analysisJson(jsonData);
 //				如果对象列表为空，则结束循环
@@ -243,9 +249,14 @@ public class DataObtainer {
 	//	Gson gson=new Gson();
 		
 		//JsonData data=gson.fromJson(html, JsonData.class);
+		JSONArray ja=null;
+		try{
 		JSONObject jo=JSONObject.parseObject(html);
-		JSONArray ja=jo.getJSONArray("comments");
-		
+		ja=jo.getJSONArray("comments");
+		}catch(Exception e)
+		{
+			log(html);
+		}
 		if(ja==null)
 		{
 			return null;

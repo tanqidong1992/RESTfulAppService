@@ -16,6 +16,7 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
   	 
         
      <bean id="user" class="com.computer.service.UserServiceImpl" />
+     <bean id="file" class="com.computer.service.FileServiceImpl"></bean>
  	<jaxrs:server address="/user">
  	
 	 	<jaxrs:serviceBeans>
@@ -29,4 +30,16 @@ http://cxf.apache.org/schemas/jaxrs.xsd">
  	</jaxrs:providers>
  	</jaxrs:server>
 
+<jaxrs:server address="/file">
+ 	
+	 	<jaxrs:serviceBeans>
+	 	<ref bean="file"></ref>
+	 	</jaxrs:serviceBeans>
+	 	
+ 	<jaxrs:providers >
+ 	 <bean class="com.colobu.fastjson.FastJsonProvider">
+ 	 </bean>
+ 	 
+ 	</jaxrs:providers>
+ 	</jaxrs:server>
 </beans>

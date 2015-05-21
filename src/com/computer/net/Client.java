@@ -2,6 +2,7 @@ package com.computer.net;
 
  
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.BufferedHttpEntity;
  
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.BasicCookieStore;
  
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -40,7 +42,7 @@ public class Client {
 	public static HttpClient httpClient=new DefaultHttpClient();
 	private static Cookie mCookie=null;
 	private static CookieStore mCookieStore=null;
-	protected static HttpClient getHttpClient()
+	public static HttpClient getHttpClient()
 	{
 		if(httpClient==null)
 		{
@@ -399,4 +401,70 @@ public static String sendPost(String url, Map<String, String> params,String char
 	    return localDefaultHttpClient;
 	  }
 	  */
+	
+	
+	public static String uploadFile(String url,String fileName,File file, Map<String, String> params, String charset) throws IOException
+	{
+		MultipartEntityBuilder meb=MultipartEntityBuilder.create();
+		
+		meb.addBinaryBody(fileName, file);
+		
+		getHttpClient();
+		Set<String> keys = params.keySet();
+		
+		for (String key : keys) {
+			meb.addTextBody(key, params.get(key));
+		}
+		HttpPost get=new HttpPost(url);
+		
+		get.setEntity(meb.build());
+		
+		HttpContext httpContext=new BasicHttpContext();
+		if(mCookieStore==null)
+	     mCookieStore = new BasicCookieStore();
+	//	mCookieStore.addCookie(mCookie);
+	    httpContext.setAttribute(ClientContext.COOKIE_STORE, mCookieStore); 
+	    
+	      
+		
+		HttpResponse response = null;
+		try {
+			response = httpClient.execute(get,httpContext);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpEntity entity = response.getEntity();
+		
+		
+		String result = null;
+		if (entity != null) {
+			entity = new BufferedHttpEntity(entity);
+			
+			InputStream in = entity.getContent();
+		
+			//byte[] all=	readStream(in);
+			
+			byte[] read = new byte[1024];
+			byte[] all = new byte[0];
+			int num;
+			while ((num = in.read(read)) > 0) {
+				byte[] temp = new byte[all.length + num];
+				System.arraycopy(all, 0, temp, 0, all.length);
+				System.arraycopy(read, 0, temp, all.length, num);
+				all = temp;
+			}
+			
+			  result = new String(all,charset);
+			if (null != in) {
+				in.close();
+			}
+		}
+		get.abort();
+		
+		return result;
+		 
+		
+		
+	}
 }
